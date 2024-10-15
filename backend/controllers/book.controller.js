@@ -35,6 +35,7 @@ export const fetchBook = async (req, res) => {
 
     try {
         const book = await Book.findById(id);
+        if (!book) return res.status(404).json({ success: false, message: "Book not found" });
         res.status(200).json({ success: true, data: book });
     } catch (error) {
         console.error("Error fetching book from DB.", error.message);
@@ -52,6 +53,7 @@ export const updateBook = async (req, res) => {
 
     try {
         const updatedBook = await Book.findByIdAndUpdate(id, book, { new: true });
+        if (!updatedBook) return res.status(404).json({ success: false, message: "Book not found" });
         res.status(200).json({ success: true, data: updatedBook });
     } catch (error) {
         console.error("Error updating books to DB.", error.message);
@@ -66,7 +68,8 @@ export const deleteBook = async (req, res) => {
     };
 
     try {
-        await Book.findByIdAndDelete(id);
+        const isDeleted = await Book.findByIdAndDelete(id);
+        if (!isDeleted) return res.status(404).json({ success: false, message: "Book not found" });
         res.status(200).json({ success: true, message: "Book deleted successfilly." });
     } catch (error) {
         console.error("Error deleting book.", error.message);
