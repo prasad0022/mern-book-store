@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Spinner } from "../components/Spinner.jsx";
 import { Link } from "react-router-dom";
 import { MdOutlineAddBox } from "react-icons/md";
